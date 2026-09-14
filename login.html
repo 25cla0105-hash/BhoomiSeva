@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BhoomiSeva Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="login-page">
+<div class="login-box">
+  <a href="/" class="back">← Back to BhoomiSeva</a>
+  <div class="login-logo">₹</div>
+  <h1>Welcome to BhoomiSeva</h1>
+  <p>Login to continue to your unified land-services dashboard.</p>
+
+  {% if error %}<div class="error">{{ error }}</div>{% endif %}
+
+  <form method="POST">
+    <label>Username</label>
+    <input name="username" placeholder="Your username" required>
+    <label>Password</label>
+    <input name="password" type="password" placeholder="Your password" required>
+    <button type="submit">Login →</button>
+  </form>
+
+  <p>New to BhoomiSeva? <a href="/register">Create an account</a></p>
+
+</div>
+</body>
+</html>

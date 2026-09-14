@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BhoomiSeva Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar dashboard-top">
+  <a class="brand" href="/">
+    <div class="logo">₹</div>
+    <div><div class="brand-name">BhoomiSeva</div><div class="brand-sub">Smart Land & Farmer Assistance</div></div>
+  </a>
+  <div class="header-actions">
+    <span class="role-pill">{{ "👨‍🌾 Farmer" if user.role == "farmer" else "📐 Surveyor" }}</span>
+    <a class="logout" href="/logout">Logout</a>
+  </div>
+</header>
+
+<div class="app-layout">
+  <aside class="sidebar">
+    <div class="profile">
+      <div class="avatar">{{ "👨‍🌾" if user.role == "farmer" else "📐" }}</div>
+      <div><b>{{ user.name }}</b><small>{{ user.role|title }}</small></div>
+    </div>
+
+    {% if user.role == "farmer" %}
+    <a class="nav active" href="/dashboard">🏠 Dashboard</a>
+    <a class="nav" href="/feature/land">🏡 My Land</a>
+    <a class="nav" href="/feature/map">🗺️ Land Survey Map</a>
+    <a class="nav" href="/feature/weather">🌦️ Weather & Rain</a>
+    <a class="nav" href="/feature/soil">🌱 Soil Information</a>
+    <a class="nav" href="/feature/report">⚠️ Report Survey Problem</a>
+    <a class="nav" href="/feature/complaints">📋 My Complaints & Requests</a>
+    {% else %}
+    <a class="nav active" href="/dashboard">🏠 Dashboard</a>
+    <a class="nav" href="/feature/assigned">📋 Assigned Surveys</a>
+    <a class="nav" href="/feature/verify">✅ Verify Land</a>
+    <a class="nav" href="/feature/boundary">📐 Boundary Survey</a>
+    <a class="nav" href="/feature/evidence">📸 Evidence Upload</a>
+    <a class="nav" href="/feature/reports">📄 Survey Reports</a>
+    {% endif %}
+  </aside>
+
+  <main class="dashboard">
+    <div class="welcome">
+      <div>
+        <span class="eyebrow">BHOOMISEVA • UNIFIED APP</span>
+        <h1>Welcome, {{ user.name }} 👋</h1>
+        <p>{{ "Manage your land, farming information and survey requests from one place." if user.role == "farmer" else "Verify land information, manage assigned surveys and create digital reports." }}</p>
+      </div>
+      <div class="status">● System Online</div>
+    </div>
+
+    {% if user.role == "farmer" %}
+    <section class="stats">
+      <div><span>Land Records</span><strong>—</strong><small>Connect authorized land source</small></div>
+      <div><span>Survey Status</span><strong>—</strong><small>No live survey linked</small></div>
+      <div><span>Soil / Weather</span><strong>—</strong><small>Connect provider</small></div>
+      <div><span>Requests</span><strong>{{ complaints|length }}</strong><small>Submitted by you</small></div>
+    </section>
+
+    <h2 class="section-title">Farmer Services</h2>
+    <section class="service-grid">
+      <a href="/feature/land" class="service"><b>🏡 My Land</b><span>Owner, acreage & verified records</span></a>
+      <a href="/feature/map" class="service"><b>🗺️ Survey Map</b><span>Boundary and survey points</span></a>
+      <a href="/feature/weather" class="service"><b>🌦️ Weather</b><span>Weather & rainfall guidance</span></a>
+      <a href="/feature/soil" class="service"><b>🌱 Soil & Water</b><span>Moisture and soil information</span></a>
+      <a href="/feature/report" class="service"><b>⚠️ Report Problem</b><span>Boundary or survey issue</span></a>
+      <a href="/feature/complaints" class="service"><b>📋 Track Requests</b><span>View complaint status</span></a>
+    </section>
+    {% else %}
+    <section class="stats">
+      <div><span>Assigned Surveys</span><strong>—</strong><small>Connect survey data source</small></div>
+      <div><span>Verified Lands</span><strong>—</strong><small>No live records linked</small></div>
+      <div><span>Pending Review</span><strong>—</strong><small>Awaiting survey integration</small></div>
+      <div><span>Reports</span><strong>—</strong><small>Awaiting survey integration</small></div>
+    </section>
+
+    <h2 class="section-title">Surveyor Services</h2>
+    <section class="service-grid">
+      <a href="/feature/assigned" class="service"><b>📋 Assigned Surveys</b><span>Manage survey requests</span></a>
+      <a href="/feature/verify" class="service"><b>✅ Verify Land</b><span>Check land information</span></a>
+      <a href="/feature/boundary" class="service"><b>📐 Boundary Survey</b><span>Record boundary points</span></a>
+      <a href="/feature/evidence" class="service"><b>📸 Evidence Upload</b><span>Photos and supporting evidence</span></a>
+      <a href="/feature/reports" class="service"><b>📄 Survey Reports</b><span>Create digital reports</span></a>
+    </section>
+    {% endif %}
+
+    <section class="demo-note">
+      <b>Production foundation:</b> Your account and submitted requests are stored in the configured database. Live government land records, GIS boundaries, weather, soil and GPS services must be connected through authorized providers.
+    </section>
+  </main>
+</div>
+</body>
+</html>
