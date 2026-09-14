@@ -1,1 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BhoomiSeva | Smart Land & Farmer Assistance</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/">
+    <div class="logo">₹</div>
+    <div>
+      <div class="brand-name">BhoomiSeva</div>
+      <div class="brand-sub">Smart Land & Farmer Assistance System</div>
+    </div>
+  </a>
+  <div class="header-actions">
+    <span class="tag">తెలుగు / English</span>
+    <a class="voice" href="/login">🔊 Listen</a>
+    <a class="login-btn" href="/login">Login</a>
+    <a class="login-btn" href="/register">Create account</a>
+  </div>
+</header>
 
+<main class="hero">
+  <div class="notice">ⓘ Digital Land Survey & Smart Agriculture Prototype (Telangana Dharani & Bhoomi Pilot)</div>
+  <h1>Smart Land & Farmer Assistance System</h1>
+  <p class="subtitle">Verified Land Information, Easy Survey Services & Smart Farming Guidance</p>
+
+  <section class="role-grid">
+    <a class="role-card farmer" href="/register?role=farmer">
+      <div class="role-icon">👨‍🌾</div>
+      <div class="arrow">→</div>
+      <h2>Farmer</h2>
+      <p>My Land • Weather • Soil • Survey Map • Complaints</p>
+    </a>
+    <a class="role-card surveyor" href="/register?role=surveyor">
+      <div class="role-icon">📐</div>
+      <div class="arrow">→</div>
+      <h2>Surveyor</h2>
+      <p>Verification • Boundary Survey • Evidence • Reports</p>
+    </a>
+  </section>
+
+  <div class="demo-row">Create an account to use BhoomiSeva. No demo credentials are included.</div>
+
+  <section class="how">
+    <h2>One App • Two Roles • One Land Record Workflow</h2>
+    <div class="steps">
+      <div><b>1</b><span>Login & select role</span></div>
+      <div><b>2</b><span>Access role dashboard</span></div>
+      <div><b>3</b><span>Share / verify land data</span></div>
+      <div><b>4</b><span>Track requests & reports</span></div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }} | BhoomiSeva</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="/dashboard">
+    <div class="logo">₹</div>
+    <div><div class="brand-name">BhoomiSeva</div><div class="brand-sub">Smart Land & Farmer Assistance</div></div>
+  </a>
+  <div class="header-actions">
+    <span class="role-pill">{{ "👨‍🌾 Farmer" if user.role == "farmer" else "📐 Surveyor" }}</span>
+    <a class="logout" href="/logout">Logout</a>
+  </div>
+</header>
+
+<main class="feature-page">
+  <a class="back-link" href="/dashboard">← Dashboard</a>
+  <div class="feature-header">
+    <div>
+      <span class="eyebrow">BHOOMISEVA SERVICE</span>
+      <h1>{{ title }}</h1>
+      <p>{{ description }}</p>
+    </div>
+    <div class="big-feature-icon">
+      {% if feature == "land" %}🏡{% elif feature == "map" or feature == "boundary" %}🗺️{% elif feature == "weather" %}🌦️{% elif feature == "soil" %}🌱{% elif feature == "report" %}⚠️{% elif feature == "evidence" %}📸{% elif feature == "reports" %}📄{% else %}📋{% endif %}
+    </div>
+  </div>
+
+  {% if feature == "report" %}
+  <div class="panel">
+    <h2>Submit Survey Problem</h2>
+    <label>Problem type</label>
+    <select id="issue">
+      <option>Incorrect boundary</option>
+      <option>Disputed area</option>
+      <option>Wrong land-owner information</option>
+      <option>Request for re-survey</option>
+    </select>
+    <label>Description</label>
+    <textarea id="details" placeholder="Explain the issue..."></textarea>
+    <button onclick="submitReport()">Submit Request</button>
+    <div id="result"></div>
+  </div>
+  {% elif feature == "map" or feature == "boundary" %}
+  <div class="map-demo">
+    <div class="map-grid">
+      <div class="plot p1">Survey Point 1</div>
+      <div class="plot p2">Survey Point 2</div>
+      <div class="plot p3">Disputed Area</div>
+    </div>
+    <div class="map-legend"><span>🟢 Verified boundary</span><span>🔴 Disputed area</span><span>📍 Survey point</span></div>
+  </div>
+  {% elif feature == "weather" %}
+  <div class="info-cards">
+    <div><b>🌡️ 29°C</b><span>Current temperature</span></div>
+    <div><b>☁️ Partly cloudy</b><span>Weather condition</span></div>
+    <div><b>🌧️ 40%</b><span>Rain probability</span></div>
+    <div><b>💧 62%</b><span>Soil moisture</span></div>
+  </div>
+  {% elif feature == "soil" %}
+  <div class="info-cards">
+    <div><b>Loamy Soil</b><span>Soil type</span></div>
+    <div><b>62%</b><span>Moisture level</span></div>
+    <div><b>Available</b><span>Water source</span></div>
+    <div><b>Good</b><span>Crop suitability</span></div>
+  </div>
+  {% else %}
+  <div class="panel">
+    <h2>Data connection required</h2>
+    <p>This service is ready for connection to an authorized land/survey data source. No fabricated land record is shown.</p>
+  </div>
+  {% endif %}
+</main>
+
+<script>
+async function submitReport() {
+  const issue = document.getElementById("issue").value;
+  const details = document.getElementById("details").value;
+  const result = document.getElementById("result");
+  const response = await fetch("/api/report", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({issue, details})
+  });
+  const data = await response.json();
+  result.innerHTML = data.ok
+    ? `<div class="success">✓ ${data.message}<br>Request ID: <b>${data.request_id}</b></div>`
+    : `<div class="error">${data.message}</div>`;
+}
+</script>
+</body>
+</html>
